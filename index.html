@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portafolio Profesional de Juancito Peña Vizcaíno - Full Stack Developer, Ingeniero en Sistemas y Analista de Datos con estética Cyberpunk.">
+  <meta name="keywords" content="Portafolio, Full Stack, Data Science, Python, .NET, React, Cyberpunk, Juancito Peña">
+  <meta name="author" content="Juancito Peña Vizcaíno">
+  <title>Juancito Peña Vizcaíno | Portafolio Profesional Cyberpunk ⚡</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Devicon (Iconos oficiales de tecnologías) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ======================================================================
+       SISTEMA DE VARIABLES DE COLOR Y CONTRASTE CYBERPUNK (DARK / LIGHT)
+       ====================================================================== */
+    :root[data-bs-theme="dark"] {
+      --bg-body: #050811;
+      --card-bg: rgba(13, 22, 41, 0.88);
+      --card-border: rgba(0, 243, 255, 0.35);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --neon-cyan: #00f3ff;
+      --neon-green: #00ff88;
+      --neon-yellow: #ffe600;
+      --neon-blue: #1e90ff;
+      --matrix-char-color: rgba(0, 255, 136, 0.28);
+      --matrix-bg-fade: rgba(5, 8, 17, 0.22);
+      --navbar-bg: rgba(5, 8, 17, 0.92);
+      --card-hover-shadow: 0 0 25px rgba(0, 243, 255, 0.45);
+      --badge-bg: rgba(0, 243, 255, 0.15);
+    }
+
+    :root[data-bs-theme="light"] {
+      --bg-body: #f1f5f9;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --card-border: rgba(14, 116, 144, 0.35);
+      --text-main: #0b1120;
+      --text-muted: #475569;
+      --neon-cyan: #0891b2;
+      --neon-green: #059669;
+      --neon-yellow: #b45309;
+      --neon-blue: #1e40af;
+      --matrix-char-color: rgba(5, 150, 105, 0.20);
+      --matrix-bg-fade: rgba(241, 245, 249, 0.28);
+      --navbar-bg: rgba(255, 255, 255, 0.95);
+      --card-hover-shadow: 0 10px 25px rgba(8, 145, 178, 0.25);
+      --badge-bg: rgba(8, 145, 178, 0.12);
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.15rem;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    h1, h2, h3, h4, h5, .cyber-font {
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1px;
+    }
+
+    /* Canvas Matrix Translúcido Fijo */
+    #matrix-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: var(--navbar-bg) !important;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      transition: background 0.3s ease;
+    }
+
+    .navbar-brand, .nav-link {
+      color: var(--text-main) !important;
+      font-weight: 600;
+    }
+
+    .nav-link:hover {
+      color: var(--neon-cyan) !important;
+      text-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    /* Tarjetas y Efectos Cyberpunk */
+    .cyber-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .cyber-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--card-hover-shadow);
+      border-color: var(--neon-cyan);
+    }
+
+    .glow-cyan {
+      color: var(--neon-cyan);
+      text-shadow: 0 0 8px rgba(0, 243, 255, 0.6);
+    }
+
+    .glow-green {
+      color: var(--neon-green);
+      text-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
+    }
+
+    .glow-yellow {
+      color: var(--neon-yellow);
+      text-shadow: 0 0 8px rgba(255, 230, 0, 0.6);
+    }
+
+    .hero-avatar {
+      width: 280px;
+      height: 280px;
+      object-fit: cover;
+      border: 3px solid var(--neon-cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 30px var(--neon-cyan);
+      animation: pulse 4s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 15px var(--neon-cyan); }
+      100% { box-shadow: 0 0 35px var(--neon-green); }
+    }
+
+    /* Stack Tecnológico */
+    .tech-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      background: var(--badge-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      margin: 6px;
+      font-weight: 600;
+      color: var(--text-main);
+      transition: all 0.25s ease;
+    }
+
+    .tech-badge i {
+      font-size: 1.45rem;
+    }
+
+    .tech-badge:hover {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 12px var(--neon-cyan);
+      transform: scale(1.05);
+    }
+
+    /* Botones de Filtro */
+    .btn-filter {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      font-weight: bold;
+      padding: 8px 20px;
+      border-radius: 30px;
+      transition: all 0.3s;
+    }
+
+    .btn-filter.active, .btn-filter:hover {
+      background: var(--neon-cyan);
+      color: #000 !important;
+      box-shadow: 0 0 15px var(--neon-cyan);
+    }
+
+    /* Imagen de Proyecto */
+    .project-img-wrapper {
+      height: 210px;
+      overflow: hidden;
+      border-top-left-radius: 13px;
+      border-top-right-radius: 13px;
+    }
+
+    .project-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .cyber-card:hover .project-img {
+      transform: scale(1.08);
+    }
+
+    /* Formulario */
+    .btn-dodgerblue {
+      background-color: #1e90ff !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      border: none;
+      padding: 12px 36px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(30, 144, 255, 0.6);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-dodgerblue:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 25px rgba(30, 144, 255, 0.9);
+      color: #fff;
+    }
+
+    .form-control {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+    }
+
+    .form-control:focus {
+      background: var(--card-bg);
+      border-color: var(--neon-cyan);
+      color: var(--text-main);
+      box-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--card-border);
+      background: var(--navbar-bg);
+    }
+
+    .social-icon {
+      font-size: 1.8rem;
+      margin: 0 10px;
+      transition: transform 0.3s, color 0.3s;
+      color: var(--neon-cyan);
+    }
+
+    .social-icon:hover {
+      color: var(--neon-yellow);
+      transform: translateY(-5px);
+      text-shadow: 0 0 12px var(--neon-yellow);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CANVAS MATRIX TRANSLÚCIDO -->
+  <canvas id="matrix-canvas"></canvas>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg fixed-top py-3">
+    <div class="container">
+      <a class="navbar-brand cyber-font glow-cyan fs-4" href="#hero">
+        <i class="fa-solid fa-terminal me-2"></i>JPV.DEV
+      </a>
+      <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars glow-cyan"></i>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+        <ul class="navbar-nav align-items-center gap-3">
+          <li class="nav-item"><a class="nav-link" href="#hero">👤 Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#stack">🛠️ Stack</a></li>
+          <li class="nav-item"><a class="nav-link" href="#proyectos">🌐 Proyectos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#experiencia">🏢 Experiencia</a></li>
+          <li class="nav-item"><a class="nav-link" href="#videos">🎥 Videos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contacto">✉️ Contacto</a></li>
+          <!-- BOTÓN CAMBIO DE MODO -->
+          <li class="nav-item">
+            <button id="theme-toggle" class="btn btn-outline-info rounded-circle px-3 py-2" title="Alternar Modo Oscuro / Claro">
+              <i id="theme-icon" class="fa-solid fa-sun text-warning"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section id="hero" class="container py-5 mt-5">
+    <div class="row align-items-center min-vh-75 py-5 g-5">
+      <div class="col-lg-7 order-2 order-lg-1">
+        <div class="d-inline-block px-3 py-1 rounded-pill mb-3" style="background: var(--badge-bg); border: 1px solid var(--neon-cyan);">
+          <span class="glow-green fw-bold">⚡ Disponible para nuevos proyectos</span>
+        </div>
+        <h1 class="display-4 fw-bold mb-2">
+          Juancito Peña Vizcaíno <span class="glow-cyan">✨👨‍💻</span>
+        </h1>
+        <h2 class="fs-4 mb-4 glow-yellow">
+          🖥️ Ingeniero en Sistemas | 🌐 Full Stack Developer | 📊 Analista de Datos | 🎓 Docente Universitario
+        </h2>
+        <p class="lead mb-4" style="color: var(--text-muted); text-align: justify;">
+          Profesional apasionado y visionario en el desarrollo de soluciones digitales 💡, con amplia experiencia en la creación de 
+          <strong>reportes, dashboards, visualizaciones interactivas, integraciones con IA y automatización de tareas</strong>. 
+          Cuenta con <strong>Maestría en Desarrollo de Software</strong>, <strong>Maestría en Sistemas Computacionales (Mención Gerencia)</strong> 
+          y <strong>Maestría en Big Data & Business Intelligence</strong>. Docente de grado en universidades 🎓 y tutor de diplomados en 
+          <strong>Análisis y Ciencia de Datos</strong> con <strong>Power BI, SQL, Python y Excel Avanzado + IA</strong>. 
+          Enfoque minimalista, responsive, optimización SEO y rigurosa arquitectura de software 🚀.
+        </p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="#contacto" class="btn btn-dodgerblue">
+            <i class="fa-solid fa-paper-plane me-2"></i>Contáctame
+          </a>
+          <a href="#proyectos" class="btn btn-filter active">
+            <i class="fa-solid fa-laptop-code me-2"></i>Ver Portafolio
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-5 order-1 order-lg-2 text-center">
+        <img src="https://avatars.githubusercontent.com/u/38921558?v=4" alt="Juancito Peña Vizcaíno" class="hero-avatar">
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK TECNOLÓGICO -->
+  <section id="stack" class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="cyber-font glow-cyan"><i class="fa-solid fa-layer-group me-2"></i>🛠️ Stack Tecnológico</h2>
+      <p class="text-muted">Herramientas y tecnologías de producción con íconos oficiales</p>
+    </div>
+
+    <!-- Frontend -->
+    <div class="cyber-card p-4 mb-4">
+      <h4 class="glow-yellow mb-3"><i class="fa-solid fa-code me-2"></i>Frontend</h4>
+      <div class="d-flex flex-wrap">
+        <div class="tech-badge"><i class="devicon-html5-plain colored"></i> HTML5</div>
+        <div class="tech-badge"><i class="devicon-css3-plain colored"></i> CSS3</div>
+        <div class="tech-badge"><i class="devicon-bootstrap-plain colored"></i> Bootstrap</div>
+        <div class="tech-badge"><i class="devicon-javascript-plain colored"></i> JavaScript</div>
+        <div class="tech-badge"><i class="devicon-react-original colored"></i> React</div>
+      </div>
+    </div>
+
+    <!-- Backend -->
+    <div class="cyber-card p-4 mb-4">
+      <h4 class="glow-green mb-3"><i class="fa-solid fa-server me-2"></i>Backend & Bases de Datos</h4>
+      <div class="d-flex flex-wrap">
+        <div class="tech-badge"><i class="devicon-dotnetcore-plain colored"></i> .NET Framework</div>
+        <div class="tech-badge"><i class="devicon-dotnetcore-plain colored"></i> .NET MAUI</div>
+        <div class="tech-badge"><i class="devicon-csharp-plain colored"></i> C#</div>
+        <div class="tech-badge"><i class="fa-solid fa-file-code glow-cyan"></i> XAML</div>
+        <div class="tech-badge"><i class="devicon-microsoftsqlserver-plain colored"></i> SQL Server</div>
+        <div class="tech-badge"><i class="devicon-supabase-plain colored"></i> Supabase</div>
+        <div class="tech-badge"><i class="devicon-firebase-plain colored"></i> Firebase</div>
+        <div class="tech-badge"><i class="devicon-python-plain colored"></i> Python</div>
+        <div class="tech-badge"><i class="devicon-django-plain"></i> Django</div>
+        <div class="tech-badge"><i class="devicon-php-plain colored"></i> PHP</div>
+        <div class="tech-badge"><i class="devicon-mysql-plain colored"></i> MySQL</div>
+        <div class="tech-badge"><i class="devicon-laravel-original colored"></i> Laravel</div>
+      </div>
+    </div>
+
+    <!-- Data Science -->
+    <div class="cyber-card p-4">
+      <h4 class="glow-cyan mb-3"><i class="fa-solid fa-chart-pie me-2"></i>Análisis y Ciencia de Datos</h4>
+      <div class="d-flex flex-wrap">
+        <div class="tech-badge"><i class="fa-solid fa-file-excel text-success"></i> Excel Avanzado</div>
+        <div class="tech-badge"><i class="fa-solid fa-database glow-cyan"></i> SQL / ETL</div>
+        <div class="tech-badge"><i class="fa-solid fa-chart-column text-warning"></i> Power BI</div>
+        <div class="tech-badge"><i class="devicon-python-plain colored"></i> Python Data</div>
+        <div class="tech-badge"><i class="devicon-streamlit-plain colored"></i> Streamlit</div>
+        <div class="tech-badge"><i class="devicon-pandas-plain colored"></i> Pandas</div>
+        <div class="tech-badge"><i class="devicon-numpy-plain colored"></i> NumPy</div>
+        <div class="tech-badge"><i class="fa-solid fa-chart-line text-info"></i> Seaborn</div>
+        <div class="tech-badge"><i class="fa-solid fa-chart-area text-danger"></i> Matplotlib</div>
+        <div class="tech-badge"><i class="devicon-scikitlearn-plain colored"></i> Scikit-Learn</div>
+        <div class="tech-badge"><i class="devicon-r-plain colored"></i> R Language</div>
+        <div class="tech-badge"><i class="fa-solid fa-chart-simple glow-yellow"></i> Chart.js</div>
+        <div class="tech-badge"><i class="fa-solid fa-chart-gantt glow-green"></i> ApexCharts</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE PROYECTOS -->
+  <section id="proyectos" class="container py-5">
+    <div class="text-center mb-4">
+      <h2 class="cyber-font glow-cyan"><i class="fa-solid fa-folder-open me-2"></i>🌐 Galería de Proyectos</h2>
+      <p class="text-muted">Soluciones de software, aplicaciones móviles y diseño digital</p>
+      <!-- Filtros Dinámicos -->
+      <div class="d-flex justify-content-center flex-wrap gap-2 mt-3">
+        <button class="btn btn-filter active" onclick="filterProjects('all', this)">⚡ Todos (9)</button>
+        <button class="btn btn-filter" onclick="filterProjects('web', this)">💻 Web (3)</button>
+        <button class="btn btn-filter" onclick="filterProjects('app', this)">📱 Apps (3)</button>
+        <button class="btn btn-filter" onclick="filterProjects('design', this)">🎨 Diseño (3)</button>
+      </div>
+    </div>
+
+    <div class="row g-4 mt-2" id="projects-container">
+      <!-- WEB 1 -->
+      <div class="col-md-6 col-lg-4 project-item" data-category="web">
+        <div class="cyber-card h-100">
+          <div class="project-img-wrapper">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfL-Leyd1Rp13h1HyEApEY-vFUt54iFN6Ycw&s" class="project-img" alt="Web 1">
+          </div>
+          <div class="p-3">
+            <span class="badge bg-primary mb-2">Web</span>
+            <h5 class="cyber-font">Plataforma Empresarial Web</h5>
+            <p class="small text-muted">Portal web corporativo con gestión reactiva y panel analítico integrado.</p>
+          </div>
+        </div>
+      </div>
+      <!-- WEB 2 -->
+      <div class="col-md-6 col-lg-4 project-item" data-category="web">
+        <div class="cyber-card h-100">
+          <div class="project-img-wrapper">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPLsf6mCKkQ4Ns2IOGdnTL6oDQR4KNIAdUbw&s" class="project-img" alt="Web 2">
+          </div>
+          <div class="p-3">
+            <span class="badge bg-primary mb-2">Web</span>
+            <h5 class="cyber-font">Dashboard Analítico Cloud</h5>
+            <p class="small text-muted">Solución SaaS con métricas en tiempo real y conectores a bases de datos relacionales.</p>
+          </div>
+        </div>
+      </div>
+      <!-- WEB 3 -->
+      <div class="col-md-6 col-lg-4 project-item" data-category="web">
+        <div class="cyber-card h-100">
+          <div class="project-img-wrapper">
+            <img src="https://i.ytimg.com/vi/ukiGFmZ32YA/maxresdefault.jpg" class="project-img" alt="Web 3">
+          </div>
+          <div class="p-3">
+            <span class="badge bg-primary mb-2">Web</span>
+            <h5 class="cyber-font">E-Commerce & Pasarela</h5>
+            <p class="small text-muted">Comercio electrónico de alta disponibilidad con carrito y autenticación segura.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- APP 1 -->
+      <div class="col-md-6 col-lg-4 project-item" data-category="app">
+        <div class="cyber-card h-100">
+          <div class="project-img-wrapper">
+            <img src="https://atomicwallet.io/images/wallets/cryptocurrency_bitcoin_wallet.webp" class="project-img" alt="App 1">
+          </div>
+          <div class="p-3">
+            <span class="badge bg-success mb-2">App</span>
+            <h5 class="cyber-font">Crypto Wallet Mobile</h5>
+            <p class="small text-muted">Billetera de activos digitales con encriptación avanzada y transacciones seguras.</p>
+          </div>
+        </div>
+      </div>
+      <!-- APP 2 -->
+      <div class="col-md-6 col-lg-4 project-item" data-category="app">
+        <div class="cyber-card h-100">
+          <div class="project-img-wrapper">
+            <img src="https://images01.nicepagecdn.com/page/12/93/website-template-preview-1293170.jpg" class="project-img" alt="App 2">
+          </div>
+          <div class="p-3">
+            <span class="badge bg-success mb-2">App</span>
+            <h5 class="cyber-font">Gestión de Clientes MAUI</h5>
+            <p class="small text-muted">Aplicación multiplataforma .NET MAUI con arquitectura MVC en 3 capas.</p>
+          </div>
+        </div>
+      </div>
+      <!-- APP 3 -->
+      <div class="col-md-6 col-lg-4 project-item" data-category="app">
+        <div class="cyber-card h-100">
+          <div class="project-img-wrapper">
+            <img src="https://www.mitec.cz/wp/wp-content/uploads/2025/06/TMX_001.png" class="project-img" alt="App 3">
+          </div>
+          <div class="p-3">
+            <span class="badge bg-success mb-2">App</span>
+            <h5 class="cyber-font">Data Monitor Móvil</h5>
+            <p class="small text-muted">Herramienta de monitoreo de telemetría y diagnósticos en tiempo real.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- DISEÑO 1 -->
+      <div class="col-md-6 col-lg-4 project-item" data-category="design">
+        <div class="cyber-card h-100">
+          <div class="project-img-wrapper">
+            <img src="https://as2.ftcdn.net/jpg/02/75/03/05/1000_F_275030527_PNJeGbT0vASVdu5TXWLvqiIbGAwYUNFj.jpg" class="project-img" alt="Diseño 1">
+          </div>
+          <div class="p-3">
+            <span class="badge bg-warning text-dark mb-2">Diseño</span>
+            <h5 class="cyber-font">UI/UX Cyberpunk Dashboard</h5>
+            <p class="small text-muted">Sistema de diseño de alta fidelidad enfocado en accesibilidad y estética sci-fi.</p>
+          </div>
+        </div>
+      </div>
+      <!-- DISEÑO 2 -->
+      <div class="col-md-6 col-lg-4 project-item" data-category="design">
+        <div class="cyber-card h-100">
+          <div class="project-img-wrapper">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTooJuOvyQnfadbRxnHhJ-UMB-7cxXaNXPmng&s" class="project-img" alt="Diseño 2">
+          </div>
+          <div class="p-3">
+            <span class="badge bg-warning text-dark mb-2">Diseño</span>
+            <h5 class="cyber-font">Branding & Design System</h5>
+            <p class="small text-muted">Guía completa de estilos, tokens semánticos y componentes reutilizables.</p>
+          </div>
+        </div>
+      </div>
+      <!-- DISEÑO 3 -->
+      <div class="col-md-6 col-lg-4 project-item" data-category="design">
+        <div class="cyber-card h-100">
+          <div class="project-img-wrapper">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCK2HLpYJaBkuJKUqtmlSzNc9V7Ziw8U3wew&s" class="project-img" alt="Diseño 3">
+          </div>
+          <div class="p-3">
+            <span class="badge bg-warning text-dark mb-2">Diseño</span>
+            <h5 class="cyber-font">Wireframing & Prototipado</h5>
+            <p class="small text-muted">Flujos de usuario interactivos y micro-interacciones para aplicaciones móviles.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCIA LABORAL (HASTA 3 TARJETAS CENTRADAS) -->
+  <section id="experiencia" class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="cyber-font glow-yellow"><i class="fa-solid fa-briefcase me-2"></i>🏢 Experiencia Laboral</h2>
+      <p class="text-muted">Trayectoria profesional en docencia, arquitectura e ingeniería de software</p>
+    </div>
+    <div class="row justify-content-center g-4">
+      <!-- Experiencia 1 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="cyber-card p-4 h-100 text-center text-md-start">
+          <div class="glow-cyan fs-2 mb-2"><i class="fa-solid fa-graduation-cap"></i></div>
+          <h4 class="cyber-font">Docente Universitario & Tutor</h4>
+          <h6 class="text-info">Facultad de Ingeniería & Diplomados (2020 - Presente)</h6>
+          <p class="small text-muted mt-3">
+            Cátedra y formación de profesionales en Desarrollo de Software, Big Data, SQL Server, Power BI y Python aplicado a Machine Learning e IA.
+          </p>
+        </div>
+      </div>
+      <!-- Experiencia 2 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="cyber-card p-4 h-100 text-center text-md-start">
+          <div class="glow-green fs-2 mb-2"><i class="fa-solid fa-laptop-code"></i></div>
+          <h4 class="cyber-font">Senior Full Stack Architect</h4>
+          <h6 class="text-success">Consultoría Independiente & Tech Lead (2018 - Presente)</h6>
+          <p class="small text-muted mt-3">
+            Diseño e implementación de sistemas multi-capas .NET MAUI, automatizaciones con Python, API REST con Django/Laravel y dashboards en tiempo real.
+          </p>
+        </div>
+      </div>
+      <!-- Experiencia 3 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="cyber-card p-4 h-100 text-center text-md-start">
+          <div class="glow-yellow fs-2 mb-2"><i class="fa-solid fa-chart-line"></i></div>
+          <h4 class="cyber-font">Consultor de BI & Automatización</h4>
+          <h6 class="text-warning">Proyectos Corporativos de Datos (2019 - Presente)</h6>
+          <p class="small text-muted mt-3">
+            Modelado dimensional de datos, extracción y limpieza ETL masiva, desarrollo de reportes analíticos con QuestPDF y soluciones en Supabase/SQL Server.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE VIDEOS DESTACADOS -->
+  <section id="videos" class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="cyber-font glow-cyan"><i class="fa-solid fa-film me-2"></i>🎥 Videos y Masterclasses Destacadas</h2>
+      <p class="text-muted">Tutoriales prácticos sobre .NET MAUI, Inteligencia Artificial y Bases de Datos</p>
+    </div>
+
+    <div class="row g-4">
+      <!-- Video 1 Visible -->
+      <div class="col-lg-4 col-md-6">
+        <div class="cyber-card h-100 p-2">
+          <div class="ratio ratio-16x9 rounded overflow-hidden">
+            <iframe src="https://www.youtube.com/embed/pn4ZTSpeHwE?si=JXQN1LzlrZD5_ZSC" title="CRUD en .NET MAUI con SQL Server y QuestPDF - Parte 2" allowfullscreen></iframe>
+          </div>
+          <div class="p-3">
+            <h5 class="cyber-font fs-6 glow-cyan">⚙️ CRUD .NET MAUI + SQL Server + QuestPDF (Parte 2)</h5>
+            <p class="small text-muted">Arquitectura en 3 capas desde cero con generación de reportes en PDF profesionales.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video 2 Visible -->
+      <div class="col-lg-4 col-md-6">
+        <div class="cyber-card h-100 p-2">
+          <div class="ratio ratio-16x9 rounded overflow-hidden">
+            <iframe src="https://www.youtube.com/embed/V_CKAglsiQc?si=oIHwdgYAWlDro8M-" title="CRUD en .NET MAUI con BD 5 Tablas y QuestPDF - Parte 3" allowfullscreen></iframe>
+          </div>
+          <div class="p-3">
+            <h5 class="cyber-font fs-6 glow-green">🔥 CRUD MAUI + SQL 5 Tablas & QuestPDF (Parte 3)</h5>
+            <p class="small text-muted">Patrón MVC en 3 capas, manejo transaccional de 5 tablas y reportes avanzados.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video 3 Visible -->
+      <div class="col-lg-4 col-md-6">
+        <div class="cyber-card h-100 p-2">
+          <div class="ratio ratio-16x9 rounded overflow-hidden">
+            <iframe src="https://www.youtube.com/embed/5KaP4W0kVEQ?si=dfUe9vbNDDxOF1ym" title="Tu propia IA desde CERO con Gemini API | Cyberpunk" allowfullscreen></iframe>
+          </div>
+          <div class="p-3">
+            <h5 class="cyber-font fs-6 glow-yellow">⚡ Tu propia IA desde CERO con Gemini API</h5>
+            <p class="small text-muted">Interfaz Cyberpunk con reconocimiento de voz, generación de código y análisis de datos.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================================
+           9 TARJETAS DE VIDEOS ADICIONALES (COMENTADAS SEGÚN REQUERIMIENTO)
+           ====================================================================== -->
+      <!--
+      <div class="col-lg-4 col-md-6">
+        <div class="cyber-card h-100 p-2">
+          <div class="ratio ratio-16x9 rounded overflow-hidden">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_4" title="Video 4" allowfullscreen></iframe>
+          </div>
+          <div class="p-3">
+            <h5 class="cyber-font fs-6 glow-cyan">🎥 Masterclass: Streamlit & Python Data Science</h5>
+            <p class="small text-muted">Construcción de dashboards de Machine Learning interactivos.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="cyber-card h-100 p-2">
+          <div class="ratio ratio-16x9 rounded overflow-hidden">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_5" title="Video 5" allowfullscreen></iframe>
+          </div>
+          <div class="p-3">
+            <h5 class="cyber-font fs-6 glow-cyan">🎥 SQL Server Optimización y Queries Complejas</h5>
+            <p class="small text-muted">Índices, planes de ejecución y funciones de ventana en SQL.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="cyber-card h-100 p-2">
+          <div class="ratio ratio-16x9 rounded overflow-hidden">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_6" title="Video 6" allowfullscreen></iframe>
+          </div>
+          <div class="p-3">
+            <h5 class="cyber-font fs-6 glow-cyan">🎥 Power BI Avanzado: DAX & Business Intelligence</h5>
+            <p class="small text-muted">Cálculo de métricas empresariales e inteligencia de tiempo con DAX.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="cyber-card h-100 p-2">
+          <div class="ratio ratio-16x9 rounded overflow-hidden">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_7" title="Video 7" allowfullscreen></iframe>
+          </div>
+          <div class="p-3">
+            <h5 class="cyber-font fs-6 glow-green">🎥 Django REST Framework & Supabase</h5>
+            <p class="small text-muted">Creación de microservicios autenticados mediante tokens JWT.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="cyber-card h-100 p-2">
+          <div class="ratio ratio-16x9 rounded overflow-hidden">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_8" title="Video 8" allowfullscreen></iframe>
+          </div>
+          <div class="p-3">
+            <h5 class="cyber-font fs-6 glow-green">🎥 Frontend Cyberpunk con CSS Grid y Canvas</h5>
+            <p class="small text-muted">Animaciones neón y renderizado matricial en navegador.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="cyber-card h-100 p-2">
+          <div class="ratio ratio-16x9 rounded overflow-hidden">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_9" title="Video 9" allowfullscreen></iframe>
+          </div>
+          <div class="p-3">
+            <h5 class="cyber-font fs-6 glow-green">🎥 Laravel + Livewire para Aplicaciones Reactivas</h5>
+            <p class="small text-muted">Desarrollo moderno sin salir del ecosistema PHP.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="cyber-card h-100 p-2">
+          <div class="ratio ratio-16x9 rounded overflow-hidden">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_10" title="Video 10" allowfullscreen></iframe>
+          </div>
+          <div class="p-3">
+            <h5 class="cyber-font fs-6 glow-yellow">🎥 Automatización de Tareas con Python & RPA</h5>
+            <p class="small text-muted">Web scraping y extracción automatizada de reportes.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="cyber-card h-100 p-2">
+          <div class="ratio ratio-16x9 rounded overflow-hidden">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_11" title="Video 11" allowfullscreen></iframe>
+          </div>
+          <div class="p-3">
+            <h5 class="cyber-font fs-6 glow-yellow">🎥 Machine Learning: Clasificación con Scikit-Learn</h5>
+            <p class="small text-muted">Modelos predictivos aplicados a retención de clientes.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="cyber-card h-100 p-2">
+          <div class="ratio ratio-16x9 rounded overflow-hidden">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_12" title="Video 12" allowfullscreen></iframe>
+          </div>
+          <div class="p-3">
+            <h5 class="cyber-font fs-6 glow-yellow">🎥 Despliegue en Servidores Cloud (Linux / Docker)</h5>
+            <p class="small text-muted">Contenedores y automatización de despliegue continuo CI/CD.</p>
+          </div>
+        </div>
+      </div>
+      -->
+    </div>
+  </section>
+
+  <!-- FORMULARIO DE CONTACTO -->
+  <section id="contacto" class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="cyber-card p-4 p-md-5">
+          <div class="text-center mb-4">
+            <h2 class="cyber-font glow-cyan"><i class="fa-solid fa-paper-plane me-2"></i>✉️ Conectemos</h2>
+            <p class="text-muted">¿Tienes un proyecto, consultoría o clase en mente? Envíame un mensaje.</p>
+          </div>
+
+          <!-- Alerta de Confirmación -->
+          <div id="contact-alert" class="alert alert-success d-none text-center fw-bold" role="alert">
+            ✅ Mensaje enviado correctamente. Nos pondremos en contacto a la brevedad.
+          </div>
+
+          <form id="portfolio-form" onsubmit="handleFormSubmit(event)">
+            <div class="mb-3">
+              <label for="name" class="form-label fw-bold"><i class="fa-solid fa-user me-2 glow-cyan"></i>Nombre completo:</label>
+              <input type="text" class="form-control" id="name" placeholder="Ej. Carlos Santana" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label fw-bold"><i class="fa-solid fa-envelope me-2 glow-green"></i>Correo electrónico:</label>
+              <input type="email" class="form-control" id="email" placeholder="nombre@correo.com" required>
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label fw-bold"><i class="fa-solid fa-phone me-2 glow-yellow"></i>Teléfono:</label>
+              <input type="tel" class="form-control" id="phone" placeholder="+1 (809) 000-0000" required>
+            </div>
+            <div class="mb-4">
+              <label for="message" class="form-label fw-bold"><i class="fa-solid fa-message me-2 glow-cyan"></i>Mensaje:</label>
+              <textarea class="form-control" id="message" rows="5" placeholder="Cuéntame sobre tu proyecto o requerimiento..." required></textarea>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-dodgerblue">
+                <i class="fa-solid fa-paper-plane me-2"></i>Enviar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-5 text-center mt-5">
+    <div class="container">
+      <h3 class="cyber-font glow-cyan mb-4">Juancito Peña Vizcaíno</h3>
+      <div class="d-flex justify-content-center flex-wrap mb-4">
+        <a href="https://www.linkedin.com/in/juancitope%C3%B1a/" target="_blank" rel="noopener noreferrer" class="social-icon" title="LinkedIn">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+        <a href="https://www.youtube.com/@JuancitoDevV" target="_blank" rel="noopener noreferrer" class="social-icon" title="YouTube">
+          <i class="fa-brands fa-youtube"></i>
+        </a>
+        <a href="https://github.com/JUANCITOPENA" target="_blank" rel="noopener noreferrer" class="social-icon" title="GitHub">
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="https://wa.me/18098706366" target="_blank" rel="noopener noreferrer" class="social-icon" title="WhatsApp">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        <a href="https://www.instagram.com/juancito.pena.v/" target="_blank" rel="noopener noreferrer" class="social-icon" title="Instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/juancito.p.v" target="_blank" rel="noopener noreferrer" class="social-icon" title="Facebook">
+          <i class="fa-brands fa-facebook"></i>
+        </a>
+        <a href="https://twitter.com/JuancitoPenaV" target="_blank" rel="noopener noreferrer" class="social-icon" title="Twitter / X">
+          <i class="fa-brands fa-x-twitter"></i>
+        </a>
+      </div>
+      <p class="text-muted small mb-3">
+        © 2026 Juancito Peña Vizcaíno. Código abierto bajo Licencia MIT. Estética Cyberpunk con HTML5, CSS3, Bootstrap 5 y JS.
+      </p>
+      <div>
+        <a href="#hero" class="btn btn-outline-info btn-sm rounded-pill px-3">
+          <i class="fa-solid fa-arrow-up me-1"></i>Volver Arriba
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- LÓGICA JAVASCRIPT: MODO DARK/LIGHT, MATRIX CANVAS Y FORMULARIO -->
+  <script>
+    /* ==========================================
+       1. FONDO MATRIX TRANSLÚCIDO EN CANVAS
+       ========================================== */
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const characters = '010101010101ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&*<>{}[]+=~';
+    const fontSize = 16;
+    let columns = Math.floor(canvas.width / fontSize);
+    let drops = Array(columns).fill(1);
+
+    function drawMatrix() {
+      const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+      
+      // Fondo de estela translúcida
+      ctx.fillStyle = isDark ? 'rgba(5, 8, 17, 0.18)' : 'rgba(241, 245, 249, 0.22)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Color de los caracteres cayendo (verde suave)
+      ctx.fillStyle = isDark ? 'rgba(0, 255, 136, 0.32)' : 'rgba(5, 150, 105, 0.25)';
+      ctx.font = `${fontSize}px monospace`;
+
+      for (let i = 0; i < drops.length; i++) {
+        const char = characters.charAt(Math.floor(Math.random() * characters.length));
+        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    setInterval(drawMatrix, 45);
+
+    /* ==========================================
+       2. ALTERNANCIA MODO DARK / LIGHT
+       ========================================== */
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-bs-theme', newTheme);
+
+      if (newTheme === 'dark') {
+        themeIcon.classList.remove('fa-moon', 'text-dark');
+        themeIcon.classList.add('fa-sun', 'text-warning');
+      } else {
+        themeIcon.classList.remove('fa-sun', 'text-warning');
+        themeIcon.classList.add('fa-moon', 'text-dark');
+      }
+    });
+
+    /* ==========================================
+       3. FILTROS DINÁMICOS DE PROYECTOS
+       ========================================== */
+    function filterProjects(category, btnElement) {
+      const buttons = document.querySelectorAll('.btn-filter');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      btnElement.classList.add('active');
+
+      const projects = document.querySelectorAll('.project-item');
+      projects.forEach(project => {
+        if (category === 'all' || project.getAttribute('data-category') === category) {
+          project.style.display = 'block';
+        } else {
+          project.style.display = 'none';
+        }
+      });
+    }
+
+    /* ==========================================
+       4. ENVÍO DE FORMULARIO DE CONTACTO
+       ========================================== */
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const message = document.getElementById('message').value;
+
+      // Destinatario objetivo: juancito.pena@gmail.com
+      console.log('Enviando datos a juancito.pena@gmail.com:', { name, email, phone, message });
+
+      // Simulación de envío con confirmación visual
+      const alertBox = document.getElementById('contact-alert');
+      alertBox.classList.remove('d-none');
+      document.getElementById('portfolio-form').reset();
+
+      setTimeout(() => {
+        alertBox.classList.add('d-none');
+      }, 5000);
+    }
+  </script>
+</body>
+</html>
